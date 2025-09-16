@@ -26,9 +26,17 @@ public class StaffChatUsage implements CommandExecutor {
 
         if (strings.length > 0) {
             String message = String.join(" ", strings);
-            Player player = (Player) commandSender;
-            Boolean t = plugin.getToggleStatus(player.getUniqueId());
 
+            Player player;
+            if (commandSender instanceof Player) {
+                player = (Player) commandSender;
+            }
+            else {
+                plugin.StaffChatMessage(null, message);
+                return true;
+            }
+
+            Boolean t = plugin.getToggleStatus(player.getUniqueId());
             if(t) {
                 plugin.PublicChatMessage(player, message);
             }

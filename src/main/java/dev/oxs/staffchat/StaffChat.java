@@ -64,7 +64,16 @@ public class StaffChat extends JavaPlugin implements Listener {
         for (Player onlinePlayer : getServer().getOnlinePlayers()) {
             if (onlinePlayer.hasPermission("staffchat.see") || onlinePlayer.isOp()) {
                 Boolean useDisplayName = StaffChatSettings.getInstance(plugin).getConfigBoolean("settings.staffchat-use-displayNamesStaffChat");
-                onlinePlayer.sendMessage(plugin.getPluginPrefix() + " " + ChatColor.WHITE + (useDisplayName ? sender.getDisplayName() : sender.getName()) + ": " + ChatColor.WHITE + printColours(message));
+
+                String playerUsername;
+                if (sender == null) {
+                    playerUsername = "Console";
+                }
+                else {
+                    playerUsername = (useDisplayName ? sender.getDisplayName() : sender.getName());
+                }
+
+                onlinePlayer.sendMessage(plugin.getPluginPrefix() + " " + ChatColor.WHITE + playerUsername + ": " + ChatColor.WHITE + printColours(message));
             }
         }
     }
