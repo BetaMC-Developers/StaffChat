@@ -32,7 +32,7 @@ public class StaffChatUsage implements CommandExecutor {
                 player = (Player) commandSender;
             }
             else {
-                plugin.StaffChatMessage(null, message);
+                plugin.StaffChatMessage(commandSender, message);
                 return true;
             }
 

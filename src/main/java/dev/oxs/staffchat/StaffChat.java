@@ -3,6 +3,7 @@ package dev.oxs.staffchat;
 import dev.oxs.staffchat.commands.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -60,22 +61,22 @@ public class StaffChat extends JavaPlugin implements Listener {
         log.info(pluginName + " has been disabled.");
     }
 
-    public void StaffChatMessage(Player sender, String message) {
+    public void StaffChatMessage(CommandSender sender, String message) {
+        Boolean useDisplayName = StaffChatSettings.getInstance(plugin).getConfigBoolean("settings.staffchat-use-displayNamesStaffChat");
+        String username;
+        if (sender instanceof Player) {
+            username = (useDisplayName ? ((Player) sender).getDisplayName() : sender.getName());
+        } else {
+            username = "Console";
+        }
+
+        String formattedMessage = plugin.getPluginPrefix() + " " + ChatColor.WHITE + username + ": " + ChatColor.WHITE + printColours(message);
         for (Player onlinePlayer : getServer().getOnlinePlayers()) {
             if (onlinePlayer.hasPermission("staffchat.see") || onlinePlayer.isOp()) {
-                Boolean useDisplayName = StaffChatSettings.getInstance(plugin).getConfigBoolean("settings.staffchat-use-displayNamesStaffChat");
-
-                String playerUsername;
-                if (sender == null) {
-                    playerUsername = "Console";
-                }
-                else {
-                    playerUsername = (useDisplayName ? sender.getDisplayName() : sender.getName());
-                }
-
-                onlinePlayer.sendMessage(plugin.getPluginPrefix() + " " + ChatColor.WHITE + playerUsername + ": " + ChatColor.WHITE + printColours(message));
+                onlinePlayer.sendMessage(formattedMessage);
             }
         }
+        ((CraftServer) sender.getServer()).getServer().console.sendMessage(formattedMessage);
     }
 
     public void PublicChatMessage(Player sender, String message) {
