@@ -1,32 +1,31 @@
 name: StaffChat
 description: Staff Chat beta plugin
 main: dev.oxs.staffchat.StaffChat
-version: 2.0.0
+version: ${project.version}
 authors:
   - oxs
-depend: [ ]
 
 commands:
   StaffChatCommand:
     description: Shows plugin information
     usage: /staffchatmenu
-    aliases: [ "scmenu","scm" ]
+    aliases: ["scmenu", "scm"]
   StaffChatUsage:
     description: Use the StaffChat
     usage: /staffchat
-    aliases: [ "sc", "staffc" ]
+    aliases: ["sc", "staffc"]
   StaffChatPublic:
     description: Use the Public Chat
     usage: /publicchat
-    aliases: [ "scp", "pc"]
+    aliases: ["scp", "pc"]
   StaffChatCheck:
     description: Check is staff chat toggled for you or a fellow staff member
     usage: /staffchatcheck
-    aliases: [ "scc" ]
+    aliases: ["scc"]
   StaffChatToggle:
     description: Use the StaffChat
     usage: /staffchattoggle
-    aliases: [ "sct", "staffct" ]
+    aliases: ["sct", "staffct"]
 
 config:
   joinMessage: true
